@@ -1,0 +1,68 @@
+[
+    {
+        "model": "users.adminuser",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$260000$PsEV6sFdCS9K2ew45IgoIW$BtMcCwSg3h2hTa5op6dEJMx7kpgn2o46Fnwcy9BeE+M=",
+            "last_login": "2022-02-20T10:30:44.241Z",
+            "is_superuser": true,
+            "username": "saivineeth",
+            "first_name": "",
+            "last_name": "",
+            "email": "",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2022-02-20T10:22:09.921Z",
+            "phone_number": null,
+            "dp": null,
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "users.taxpayer",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$260000$jCHArYJG8cw3tENzu0Wf13$RsOEOdIY9BZ0GHyftRA+cHgrUs0y0L8R1igzaeGXcm8=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "taxpayer",
+            "first_name": "",
+            "last_name": "",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2022-02-20T11:43:15.334Z",
+            "phone_number": null,
+            "dp": null,
+            "temppassword": null,
+            "istemppassword": false,
+            "isotherterritory": false,
+            "gstin": "",
+            "groups": [],
+            "user_permissions": [],
+            "taxaccountants": []
+        }
+    },
+    {
+        "model": "users.taxaccountant",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$260000$PsEV6sFdCS9K2ew45IgoIW$BtMcCwSg3h2hTa5op6dEJMx7kpgn2o46Fnwcy9BeE+M=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "taxaccountant",
+            "first_name": "",
+            "last_name": "",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2022-02-20T11:43:00.288Z",
+            "phone_number": null,
+            "dp": null,
+            "groups": [],
+            "user_permissions": [],
+            "taxpayers": []
+        }
+    }
+]

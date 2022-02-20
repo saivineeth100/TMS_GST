@@ -6,6 +6,10 @@ This Project is developed as a part of Interview Process of RedCarpet
 
 All features in this appliccation are requested by them only.
 
+## Backend-API
+
+[PostMan Collection](https://documenter.getpostman.com/view/13855108/UVkjwdD1)
+
 ### Question Answered
 
 #### Q: How will you set the role of a user ?

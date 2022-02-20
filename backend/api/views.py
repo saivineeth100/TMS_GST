@@ -48,5 +48,7 @@ class ListCRUDAPIView(ListModelMixin, CRUDAPIView):
 
 #Able to get single Object or List    
 class ListSingleModelMixin(ListModelMixin,mixins.RetrieveModelMixin,generics.GenericAPIView):
-    pass
+    lookup_field = "id"
+    
+    
 

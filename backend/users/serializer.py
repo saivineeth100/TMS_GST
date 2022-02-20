@@ -6,11 +6,12 @@ from users.models import TaxPayer, TaxAccountant,AdminUser
 class GenericUserSerializer(serializers.ModelSerializer):
     class Meta:
     
-        read_only_fields = ("is_active", "is_staff", "is_superuser", "date_joined","last_login","groups","user_permissions")
+        read_only_fields = ("is_active", "is_staff", "is_superuser", "date_joined","last_login","user_permissions")
         extra_kwargs = {
             "password": {"write_only": True, "required": False},
         }
-        fields = '__all__'
+        exclude = ["groups"]
+        #fields = '__all__'
 
 class AdminUserSerializer(GenericUserSerializer):
     class Meta(GenericUserSerializer.Meta):

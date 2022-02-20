@@ -121,7 +121,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ROOT_URLCONF = 'TMS_GST.urls'
 ROOT_HOSTCONF = 'domains.hosts'
 DEFAULT_HOST = 'www'
-
+PARENT_HOST = 'localhost'
 SITE_ID = 1
 
 AUTH_USER_MODEL = "users.AdminUser"

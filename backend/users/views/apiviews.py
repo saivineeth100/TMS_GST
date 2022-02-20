@@ -36,6 +36,8 @@ class TaxPayersAPIView(ListCRUDAPIView):
             # Making sure querying only taxpayer instead of all if user is taxpayer
             # This will also make sure tax payer has no access to other taxpayer data ,it throws 404 not found if id not matched with user id
             return TaxPayer.objects.filter(id=self.user.id)
+        else:
+            return TaxPayer.objects.all()
 
 class TaxAccountantsAPIView(ListSingleModelMixin):
     serializer_class = TaxAccountantSerializer
