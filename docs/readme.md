@@ -4,7 +4,7 @@
 
 This Project is developed as a part of Interview Process of RedCarpet
 
-All features in this appliccation are requested by them only.
+[All features](https://pastebin.com/KxYPDsre) in this application are requested by them only.
 
 ## Backend-API
 
@@ -27,3 +27,14 @@ authenticate user with username/password at login endpoint to generate tokens, r
 #### Q: How will you handle roles in an API?
 
 Since I am using sepearate tables for each user-type,default django-authenticator will not work, So I will add 2 new authenticators which can handle different user models
+
+### Other Questions
+
+#### Q: How to Run Django Tests?
+
+Run py manage.py test
+
+#### Q: Why Changes in Features 5th Point?
+
+Since we are developing GST management system we will take GSTIN and Sales Income from sales of products and services,
+GST is not levied on Salary and income from share market those are covered by Direct Tax(Income Tax)

@@ -6,7 +6,6 @@ from .test_setup import TestSetup
 @override_settings(DEFAULT_HOST='api')
 class AuthViewsTests(TestSetup):
 
-    fixtures = ['users']
 
     def test_Login_Emptydata(self):
         res = self.client.post(self.login_url)

@@ -38,6 +38,7 @@ class TaxDue(models.Model):
     generatedby = models.ForeignKey('users.TaxAccountant', verbose_name=_("taxaccountants"), on_delete=models.CASCADE,related_query_name="clienttaxdues")
     generatedon = models.DateTimeField(auto_now_add=True)
     editedon = models.DateTimeField(auto_now=True)
+    dueon = models.DateTimeField()
     ispaid = models.BooleanField(default=False)
     
         

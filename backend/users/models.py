@@ -52,14 +52,17 @@ class TaxPayer(AbstractUser):
     istemppassword = models.BooleanField(default=False)
     isotherterritory = models.BooleanField(default=False)
     gstin = models.CharField(max_length=15,validators=[GSTINREGEXValidator])
+
     class Meta:
         db_table  = 'TaxPayers'
+        ordering = ('-id',)
 
 class TaxAccountant(AbstractUser):    
     taxpayers = models.ManyToManyField(TaxPayer,blank=True,through=TaxPayer.taxaccountants.through)
 
     class Meta:
         db_table  = 'TaxAccountants'
+        ordering = ('-id',)
 
     def GenerateTaxDue(self,taxdetails:list[TaxDetails],taxpayerid:int):
         cgst,sgst,ugst,igst,cess = 0
