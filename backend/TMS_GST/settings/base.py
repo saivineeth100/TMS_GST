@@ -23,28 +23,45 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # Application references
 # https://docs.djangoproject.com/en/2.1/ref/settings/#std:setting-INSTALLED_APPS
 INSTALLED_APPS = [
-    # Add your apps here to enable them
+    #Custom
+    'users',
+    'domains',
+    'api',
+    'gst',
+
+    #Django
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.sites', # required by allauth
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
+
+    #external
+    'django_hosts',
+    'corsheaders',
+    'rest_framework',
+    'rest_framework_simplejwt',
 ]
 
 # Middleware framework
 # https://docs.djangoproject.com/en/2.1/topics/http/middleware/
 MIDDLEWARE = [
+    'django_hosts.middleware.HostsRequestMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_hosts.middleware.HostsResponseMiddleware',
 ]
 
-ROOT_URLCONF = 'TMS_GST.urls'
+
 
 # Template configuration
 # https://docs.djangoproject.com/en/2.1/topics/templates/
@@ -97,3 +114,45 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+ROOT_URLCONF = 'TMS_GST.urls'
+ROOT_HOSTCONF = 'domains.hosts'
+DEFAULT_HOST = 'www'
+
+SITE_ID = 1
+
+AUTH_USER_MODEL = "users.AdminUser"
+
+AUTHENTICATION_BACKENDS = [
+    # Default auth backend authenticates EndClient
+    'django.contrib.auth.backends.ModelBackend',
+    # Add support to authenticate TaxAccountants using custom auth backend
+    'users.auth.backend.TaxAccountantAuthBackend',
+    # Add support to authenticate TaxPayers using custom auth backend
+    'users.auth.backend.TaxPayerAuthBackend',
+]
+
+REST_FRAMEWORK = {
+
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle'
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '100/day',
+        'user': '100/day'
+    },
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'api.auth.simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.DjangoModelPermissions',
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+
+}

@@ -29,18 +29,66 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="backend\api\admin.py" />
+    <Compile Include="backend\api\apps.py" />
+    <Compile Include="backend\api\migrations\__init__.py" />
+    <Compile Include="backend\api\models.py" />
+    <Compile Include="backend\api\tests.py" />
+    <Compile Include="backend\api\views.py" />
+    <Compile Include="backend\api\__init__.py" />
+    <Compile Include="backend\domains\admin.py" />
+    <Compile Include="backend\domains\apps.py" />
+    <Compile Include="backend\domains\migrations\__init__.py" />
+    <Compile Include="backend\domains\models.py" />
+    <Compile Include="backend\domains\tests.py" />
+    <Compile Include="backend\domains\views.py" />
+    <Compile Include="backend\domains\__init__.py" />
+    <Compile Include="backend\gst\admin.py" />
+    <Compile Include="backend\gst\apps.py" />
+    <Compile Include="backend\gst\migrations\__init__.py" />
+    <Compile Include="backend\gst\models.py" />
+    <Compile Include="backend\gst\tests.py" />
+    <Compile Include="backend\gst\views.py" />
+    <Compile Include="backend\gst\__init__.py" />
     <Compile Include="backend\manage.py" />
     <Compile Include="backend\TMS_GST\__init__.py" />
     <Compile Include="backend\TMS_GST\settings.py" />
     <Compile Include="backend\TMS_GST\urls.py" />
     <Compile Include="backend\TMS_GST\wsgi.py" />
+    <Compile Include="backend\users\admin.py" />
+    <Compile Include="backend\users\apps.py" />
+    <Compile Include="backend\users\migrations\__init__.py" />
+    <Compile Include="backend\users\models.py" />
+    <Compile Include="backend\users\tests.py" />
+    <Compile Include="backend\users\views.py" />
+    <Compile Include="backend\users\__init__.py" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="backend\api\templates\api\index.html" />
+    <Content Include="backend\domains\templates\domains\index.html" />
+    <Content Include="backend\gst\templates\gst\index.html" />
     <Content Include="backend\requirements.txt" />
+    <Content Include="backend\users\templates\users\index.html" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="backend\" />
+    <Folder Include="backend\api\" />
+    <Folder Include="backend\api\migrations\" />
+    <Folder Include="backend\api\templates\" />
+    <Folder Include="backend\api\templates\api\" />
+    <Folder Include="backend\domains\" />
+    <Folder Include="backend\domains\migrations\" />
+    <Folder Include="backend\domains\templates\" />
+    <Folder Include="backend\domains\templates\domains\" />
+    <Folder Include="backend\gst\" />
+    <Folder Include="backend\gst\migrations\" />
+    <Folder Include="backend\gst\templates\" />
+    <Folder Include="backend\gst\templates\gst\" />
     <Folder Include="backend\TMS_GST\" />
+    <Folder Include="backend\users\" />
+    <Folder Include="backend\users\migrations\" />
+    <Folder Include="backend\users\templates\" />
+    <Folder Include="backend\users\templates\users\" />
     <Folder Include="frontend\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.Django.targets" />

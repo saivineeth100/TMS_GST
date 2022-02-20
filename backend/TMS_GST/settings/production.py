@@ -1,3 +1,4 @@
+from datetime import timedelta
 from .base import *
 
 
@@ -14,4 +15,10 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=10),
+    'AUTH_TOKEN_CLASSES':('api.auth.simplejwt.token.AccessToken',)
 }
