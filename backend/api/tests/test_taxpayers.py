@@ -17,7 +17,7 @@ class AuthViewsTests(TestSetup):
         return super().setUp()
 
     def test_retrieve_Single_taxpayer_withoutLogginguser(self):
-        taxpayers_retrieve_url = reverse(viewname="taxpayer",args={1}) 
+        taxpayers_retrieve_url = reverse(viewname="taxpayers",args={1}) 
         res = self.client.get(taxpayers_retrieve_url)
         self.assertEqual(res.status_code, 401)
 
@@ -26,7 +26,7 @@ class AuthViewsTests(TestSetup):
         tokens = json.loads(loginres.content).get("tokens")
         acesstoken = tokens.get("access")
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {acesstoken}')
-        taxpayers_retrieve_url = reverse(viewname="taxpayer",args={1})    
+        taxpayers_retrieve_url = reverse(viewname="taxpayers",args={1})    
         res = self.client.get(taxpayers_retrieve_url)
         taxpayerid =  json.loads(res.content).get("id")
         username =  json.loads(res.content).get("username")
@@ -39,7 +39,7 @@ class AuthViewsTests(TestSetup):
         tokens = json.loads(loginres.content).get("tokens")
         acesstoken = tokens.get("access")
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {acesstoken}')
-        taxpayers_retrieve_url = reverse(viewname="taxpayer",args={2})    
+        taxpayers_retrieve_url = reverse(viewname="taxpayers",args={2})    
         res = self.client.get(taxpayers_retrieve_url)
         self.assertEqual(res.status_code, 404)
     
@@ -117,6 +117,32 @@ class AuthViewsTests(TestSetup):
         self.assertEqual(taxaccountantid, [1])
         self.assertEqual(username, "taxpayer9")
 
+    def test_create_Edit_TaxPayer_byloggingas_TaxAccountant(self):
+        #CREATE
+        loginres = self.client.post(self.login_url,{"username": "taxaccountant", "password":"test@123"})
+        tokens = json.loads(loginres.content).get("tokens")
+        acesstoken = tokens.get("access")
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {acesstoken}')
+        data = {"username": "taxpayer123","first_name": "","last_name": "",
+        "email": "","gstin":"18AABCU9603R1ZM"}
+        res = self.client.post(self.taxpayersCRUD_url,data)
+        content = json.loads(res.content)
+        taxaccountantid =  content.get("taxaccountants")
+        taxpayerid = content.get("id")
+        username =  content.get("username")
+        self.assertEqual(taxaccountantid, [1])
+        self.assertEqual(username, "taxpayer123")
+
+        #EDIT
+        editeddata = {"username": "taxpayer123_Edited","first_name": "firstname","last_name": "lastname",
+        "email": "","gstin":"18AABCU9603R1ZM"}
+        taxpayersCRUD_edit_url = reverse(viewname="taxpayers",args=[taxpayerid])
+        edited_res = self.client.put(taxpayersCRUD_edit_url,editeddata)
+        edited_content = json.loads(edited_res.content)
+        self.assertEqual(edited_res.status_code,200)
+        self.assertEqual(edited_content.get("username"),"taxpayer123_Edited")
+        self.assertEqual(edited_content.get("first_name"),"firstname")
+
     def test_create_TaxPayer_byloggingas_Admin(self):
         loginres = self.client.post(self.login_url,{"username": "adminuser", "password":"test@123"})
         tokens = json.loads(loginres.content).get("tokens")
@@ -129,3 +155,29 @@ class AuthViewsTests(TestSetup):
         username =  json.loads(res.content).get("username")
         self.assertEqual(taxaccountantids, [])
         self.assertEqual(username, "taxpayer8")
+
+    def test_create_Edit_TaxPayer_byloggingas_Admin(self):
+        #CREATE
+        loginres = self.client.post(self.login_url,{"username": "adminuser", "password":"test@123"})
+        tokens = json.loads(loginres.content).get("tokens")
+        acesstoken = tokens.get("access")
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {acesstoken}')
+        data = {"username": "taxpayer1234","first_name": "","last_name": "",
+        "email": "","gstin":"18AABCU9603R1ZM"}
+        res = self.client.post(self.taxpayersCRUD_url,data)
+        content = json.loads(res.content)
+        taxaccountantid =  content.get("taxaccountants")
+        taxpayerid = content.get("id")
+        username =  content.get("username")
+        self.assertEqual(taxaccountantid, [])
+        self.assertEqual(username, "taxpayer1234")
+
+        #EDIT
+        editeddata = {"username": "taxpayer1234_Edited","first_name": "firstname","last_name": "lastname",
+        "email": "","gstin":"18AABCU9603R1ZM"}
+        taxpayersCRUD_edit_url = reverse(viewname="taxpayers",args=[taxpayerid])
+        edited_res = self.client.put(taxpayersCRUD_edit_url,editeddata)
+        edited_content = json.loads(edited_res.content)
+        self.assertEqual(edited_res.status_code,200)
+        self.assertEqual(edited_content.get("username"),"taxpayer1234_Edited")
+        self.assertEqual(edited_content.get("first_name"),"firstname")

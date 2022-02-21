@@ -5,8 +5,8 @@ from django.utils.translation import gettext_lazy as _
 from django.core.validators import RegexValidator
 
 
-from gst.models import TaxDue,TaxDetails
-from gst.utils import CaculateTax
+from gst.models import TaxDue,ProductTaxDetails,ServiceTaxDetails
+from gst.utils import CaculateTaxonProduct
 # Create your models here.
 class AbstractUser(BaseAbstractUser):
     
@@ -64,19 +64,29 @@ class TaxAccountant(AbstractUser):
         db_table  = 'TaxAccountants'
         ordering = ('-id',)
 
-    def GenerateTaxDue(self,taxdetails:list[TaxDetails],taxpayerid:int):
+    def GenerateTaxDue(self,Ptaxdetails:list[ProductTaxDetails],Staxdetails:list[ServiceTaxDetails],taxpayerid:int):
         cgst,sgst,ugst,igst,cess = 0
-        for taxdetail in taxdetails:
-            p_cgst,p_sgst,p_ugst,p_igst,p_cess = CaculateTax(taxdetail)
-            cgst += p_cgst
-            sgst += p_sgst
-            ugst += p_ugst
-            igst += p_igst
-            cess += p_cess
-        
         taxdue:TaxDue =  TaxDue(cgst,sgst,ugst,igst,cess)
         taxdue.taxpayer_id = taxpayerid
         taxdue.generatedby = self
         taxdue.save()
-        TaxDetails.objects.bulk_create(taxdetails)
+        for ptaxdetail in Ptaxdetails:
+            ptaxdetail.taxdue = taxdue.id
+            p_cgst,p_sgst,p_ugst,p_igst,p_cess = CaculateTaxonProduct(ptaxdetail)
+            taxdue.cgst += p_cgst
+            taxdue.sgst += p_sgst
+            taxdue.ugst += p_ugst
+            taxdue.igst += p_igst
+            taxdue.cess += p_cess
+        for staxdetail in Staxdetails:
+            staxdetail.taxdue = taxdue.id
+            s_cgst,s_sgst,s_ugst,s_igst,s_cess = CaculateTaxonProduct(staxdetail)
+            taxdue.cgst += s_cgst
+            taxdue.sgst += s_sgst
+            taxdue.ugst += s_ugst
+            taxdue.igst += s_igst
+            taxdue.cess += s_cess
+        taxdue.save()
+        ProductTaxDetails.objects.bulk_create(Ptaxdetails)
+        ServiceTaxDetails.objects.bulk_create(Staxdetails)
         return taxdue

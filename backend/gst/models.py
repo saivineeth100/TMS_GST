@@ -19,12 +19,22 @@ class Product(AbstractTaxinfo):
 class Service(AbstractTaxinfo):
     taxpayer = models.ForeignKey('users.TaxPayer', verbose_name=_("taxpayers"), on_delete=models.CASCADE,related_query_name="services")
 
-class TaxDetails(AbstractTaxinfo):
+class AbstractTaxDetails(models.Model):
     interstate = models.BooleanField(default=False)
     value = models.DecimalField(decimal_places=2,max_digits=10)
     taxpayer = models.ForeignKey('users.TaxPayer', verbose_name=_("taxpayers"), on_delete=models.CASCADE,related_query_name="taxdetails")
-    taxdue = models.ForeignKey('gst.TaxDue', verbose_name=_("taxdues"), on_delete=models.CASCADE,related_query_name="taxdetails")
+    class Meta:
+        abstract = True
     
+class ProductTaxDetails(AbstractTaxDetails):
+    product = models.ForeignKey('gst.Product', verbose_name=_("products"), on_delete=models.CASCADE,related_query_name="taxdetails")
+    taxdue = models.ForeignKey('gst.TaxDue', verbose_name=_("taxdues"), on_delete=models.CASCADE,related_query_name="product_taxdetails")
+    
+
+
+class ServiceTaxDetails(AbstractTaxDetails):
+    service = models.ForeignKey('gst.Service', verbose_name=_("services"), on_delete=models.CASCADE,related_query_name="taxdetails")
+    taxdue = models.ForeignKey('gst.TaxDue', verbose_name=_("taxdues"), on_delete=models.CASCADE,related_query_name="service_taxdetails")
     
 
 class TaxDue(models.Model):
