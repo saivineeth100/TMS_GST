@@ -20,6 +20,7 @@
 **/node_modules
 **/npm-debug.log
 **/obj
+**/env
 **/node_modules
 **/secrets.dev.yaml
 **/values.dev.yaml
