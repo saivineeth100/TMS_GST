@@ -1,6 +1,10 @@
-from asyncio.windows_events import NULL
+
+
+import django
 from django.shortcuts import render
 from django.contrib.auth.mixins import PermissionRequiredMixin
+
+from rest_framework.exceptions import PermissionDenied
 
 from api.views import ListSingleModelMixin,ListCRUDAPIView
 from users.models import TaxPayer, TaxAccountant,AdminUser
@@ -16,22 +20,24 @@ class TaxPayersAPIView(ListCRUDAPIView):
         # if user_type is TaxPayer then chnage to retrieve mode
         if self.user_type is TaxPayer:
             id = self.kwargs.get("id")
-            if id is None or NULL:
+            if id is None:
                 self.kwargs['id'] =self.user.id        
         return super().get(request, *args, **kwargs)
 
     def perform_create(self, serializer):
+        instance:TaxPayer =  serializer.save()
         if self.user_type is TaxAccountant:
             #adding curent user as taxaccountant for taxpayer
-            serializer.validated_data["taxaccountants"].append(self.user)
-        return super().perform_create(serializer)
-    
+            instance.taxaccountants.add(self.user)
+            instance.save()
+
 
     def get_queryset(self):
         self.user = self.request.user
         self.user_type = type(self.user)
         if  self.user_type is TaxAccountant:  
-            return self.user.taxpayers.all() #Getting only taxpayers related to TaxAccountant is user us TaxAccountant
+            qs = self.user.taxpayers.all()
+            return qs#Getting only taxpayers related to TaxAccountant is user us TaxAccountant
         elif self.user_type is TaxPayer:
             # Making sure querying only taxpayer instead of all if user is taxpayer
             # This will also make sure tax payer has no access to other taxpayer data ,it throws 404 not found if id not matched with user id

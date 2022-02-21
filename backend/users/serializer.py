@@ -10,8 +10,8 @@ class GenericUserSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             "password": {"write_only": True, "required": False},
         }
-        exclude = ["groups"]
-        #fields = '__all__'
+        #exclude = ["groups"]
+        fields = '__all__'
 
 class AdminUserSerializer(GenericUserSerializer):
     class Meta(GenericUserSerializer.Meta):

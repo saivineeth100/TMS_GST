@@ -128,11 +128,12 @@ AUTH_USER_MODEL = "users.AdminUser"
 
 AUTHENTICATION_BACKENDS = [
     # Default auth backend authenticates EndClient
-    'django.contrib.auth.backends.ModelBackend',
+    #'django.contrib.auth.backends.ModelBackend',
     # Add support to authenticate TaxAccountants using custom auth backend
     'users.auth.backend.TaxAccountantAuthBackend',
     # Add support to authenticate TaxPayers using custom auth backend
     'users.auth.backend.TaxPayerAuthBackend',
+    'users.auth.backend.AdminUserAuthBackend',
 ]
 
 REST_FRAMEWORK = {

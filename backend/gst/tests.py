@@ -13,12 +13,12 @@ from gst.models import TaxDetails
 from users.models import TaxPayer
 # TODO: Configure your database in settings.py and sync before running tests.
 
-class SimpleTest(TestCase):
+class GSTUtilsTests(TestCase):
 
     # Django requires an explicit setup() when running tests in PTVS
     @classmethod
     def setUpClass(cls):
-        super(SimpleTest, cls).setUpClass()
+        super(GSTUtilsTests, cls).setUpClass()
         django.setup()
 
     def test_CalculateTax_SameState(self):
