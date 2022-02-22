@@ -4,6 +4,8 @@
 
 This Project is developed as a part of Interview Process of RedCarpet
 
+[Features Completed So Far](/docs/fetures.md)
+
 [All features](https://pastebin.com/KxYPDsre) in this application are requested by them only.
 
 ## Backend-API
@@ -30,12 +32,17 @@ Since I am using sepearate tables for each user-type,default django-authenticato
 
 ### Other Questions
 
-#### Q: How to Run Django Tests?
+#### Q: How to Run Django Tests in Docker?
 
+Fixtures will load automatically
 In App Folder Run ```python3 manage.py test```
 We can run test based on App also
 
-ex: ```python3 manage.py test gst``` ```python3 manage.py test api```
+Ex:
+
+```python3 manage.py test gst```
+
+```python3 manage.py test api```
 
 #### Q: Why Changes in Features 5th Point?
 
