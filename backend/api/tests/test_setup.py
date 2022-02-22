@@ -4,7 +4,7 @@ from django_hosts import reverse
 
 
 class TestSetup(APITestCase):
-    fixtures = ['users']
+    fixtures = ['users','gst']
     def setUp(self):
         self.login_url = reverse(viewname="login")
         return super().setUp()

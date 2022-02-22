@@ -18,7 +18,7 @@ Since I am maintaining seperate table for each user ,I dont need role field.
 
 #### Q: How you are creating/salting/hashing the passwords?
 
-I am using default hashing system provided by Django
+I am using default hashing system provided by Django as it will be faster for development
 
 #### Q:  Will you use a token? a username/password ?  Are you using JWT?
 
@@ -32,7 +32,10 @@ Since I am using sepearate tables for each user-type,default django-authenticato
 
 #### Q: How to Run Django Tests?
 
-Run py manage.py test
+In App Folder Run ```python3 manage.py test```
+We can run test based on App also
+
+ex: ```python3 manage.py test gst``` ```python3 manage.py test api```
 
 #### Q: Why Changes in Features 5th Point?
 

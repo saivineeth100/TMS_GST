@@ -6,7 +6,7 @@ from django.core.validators import RegexValidator
 
 
 from gst.models import TaxDue,ProductTaxDetails,ServiceTaxDetails
-from gst.utils import CaculateTaxonProduct
+from gst.utils import CaculateTaxonProduct,CaculateTaxonService
 # Create your models here.
 class AbstractUser(BaseAbstractUser):
     
@@ -80,7 +80,7 @@ class TaxAccountant(AbstractUser):
             taxdue.cess += p_cess
         for staxdetail in Staxdetails:
             staxdetail.taxdue = taxdue.id
-            s_cgst,s_sgst,s_ugst,s_igst,s_cess = CaculateTaxonProduct(staxdetail)
+            s_cgst,s_sgst,s_ugst,s_igst,s_cess = CaculateTaxonService(staxdetail)
             taxdue.cgst += s_cgst
             taxdue.sgst += s_sgst
             taxdue.ugst += s_ugst

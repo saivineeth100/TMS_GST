@@ -4,7 +4,6 @@ import django
 from django.shortcuts import render
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
-from rest_framework.exceptions import PermissionDenied
 
 from api.views import ListSingleModelMixin,ListCRUDAPIView
 from users.models import TaxPayer, TaxAccountant,AdminUser

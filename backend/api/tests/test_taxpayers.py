@@ -10,7 +10,7 @@ from api.tests.test_setup import TestSetup
 
 
 @override_settings(DEFAULT_HOST='api')
-class AuthViewsTests(TestSetup):
+class TaxpayersTests(TestSetup):
     def setUp(self):
         self.taxpayersCRUD_url = reverse(viewname="taxpayers")
                 
@@ -69,7 +69,7 @@ class AuthViewsTests(TestSetup):
         taxpayerid =  results[0].get("id")
         username =  results[0].get("username")
         self.assertEqual(res.status_code, 200)
-        self.assertEqual(count, 2)
+        self.assertEqual(count, 3)
         self.assertEqual(taxpayerid, 3)
         self.assertEqual(username, "taxpayer3")
 

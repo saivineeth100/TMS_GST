@@ -1,31 +1,30 @@
+from decimal import Decimal
 
-from gst.models import ProductTaxDetails,Product,ServiceTaxDetails,Service
-
-def CaculateTaxonProduct(item:ProductTaxDetails):
+def CaculateTaxonProduct(item):
     cgst,sgst,ugst,igst,cess = 0,0,0,0,0
     if item.interstate:
-        igst += item.value * (item.product.taxrate/100)
+        igst += item.value * Decimal(item.product.taxrate/100)
     else:
-        cgst += item.value * (item.product.taxrate/200)
+        cgst += item.value * Decimal(item.product.taxrate/200)
         if item.taxpayer.isotherterritory:
-            ugst += item.value * (item.product.taxrate/200)
+            ugst += item.value * Decimal(item.product.taxrate/200)
         else:
-            sgst += item.value * (item.product.taxrate/200)
+            sgst += item.value * Decimal(item.product.taxrate/200)
     if item.product.cessrate is not None:
-        cess += item.value * (item.product.cessrate/100)
+        cess += item.value * Decimal(item.product.cessrate/100)
     return round(cgst,2),round(sgst,2),round(ugst,2),round(igst,2),round(cess,2)
 
-def CaculateTaxonService(item:ServiceTaxDetails):
+def CaculateTaxonService(item):
     cgst,sgst,ugst,igst,cess = 0,0,0,0,0
     if item.interstate:
-        igst += item.value * (item.service.taxrate/100)
+        igst += item.value * Decimal(item.service.taxrate/100)
     else:
-        cgst += item.value * (item.service.taxrate/200)
+        cgst += item.value * Decimal(item.service.taxrate/200)
         if item.taxpayer.isotherterritory:
-            ugst += item.value * (item.service.taxrate/200)
+            ugst += item.value * Decimal(item.service.taxrate/200)
         else:
-            sgst += item.value * (item.service.taxrate/200)
+            sgst += item.value * Decimal(item.service.taxrate/200)
     if item.service.cessrate is not None:
-        cess += item.value * (item.service.cessrate/100)
+        cess += item.value * Decimal(item.service.cessrate/100)
     return round(cgst,2),round(sgst,2),round(ugst,2),round(igst,2),round(cess,2)
     
